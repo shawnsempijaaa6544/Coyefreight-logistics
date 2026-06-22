@@ -1,0 +1,142 @@
+/* ==========================================================================
+   Preloader
+   ========================================================================== */
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #060d14, #0a1929);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+#preloader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader-logo {
+  font-family: var(--font-secondary);
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--color-white);
+  margin-bottom: 2.5rem;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  animation: logoReveal 0.8s ease both;
+}
+
+.loader-logo span {
+  color: var(--color-primary);
+}
+
+@keyframes logoReveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Progress bar preloader */
+.truck-loader {
+  width: 180px;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.truck-loader::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 40%;
+  background: var(--gradient-premium-2);
+  border-radius: 2px;
+  animation: loaderProgress 1.4s ease-in-out infinite;
+}
+
+@keyframes loaderProgress {
+  0%   { left: -40%; }
+  100% { left: 140%; }
+}
+
+/* ==========================================================================
+   Scroll Animations (Intersection Observer)
+   ========================================================================== */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-in-left {
+  transform: translateX(-40px);
+}
+.fade-in-left.is-visible {
+  transform: translateX(0);
+}
+
+.fade-in-right {
+  transform: translateX(40px);
+}
+.fade-in-right.is-visible {
+  transform: translateX(0);
+}
+
+/* When combined with fade-in-left/right, override so both axes are handled */
+.animate-on-scroll.fade-in-left {
+  opacity: 0;
+  transform: translateX(-40px) translateY(0);
+}
+.animate-on-scroll.fade-in-left.is-visible {
+  opacity: 1;
+  transform: translateX(0) translateY(0);
+}
+
+.animate-on-scroll.fade-in-right {
+  opacity: 0;
+  transform: translateX(40px) translateY(0);
+}
+.animate-on-scroll.fade-in-right.is-visible {
+  opacity: 1;
+  transform: translateX(0) translateY(0);
+}
+
+/* ==========================================================================
+   Floating Shapes (decorative)
+   ========================================================================== */
+.floating-shape {
+  position: absolute;
+  animation: float 7s ease-in-out infinite;
+  z-index: 0;
+  opacity: 0.07;
+  pointer-events: none;
+}
+
+@keyframes float {
+  0%   { transform: translateY(0px) rotate(0deg); }
+  50%  { transform: translateY(-22px) rotate(6deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+/* ==========================================================================
+   NOTE: .animated-glow is defined in base.css using filter:drop-shadow
+   so it works correctly on gradient-clipped text elements.
+   The duplicate box-shadow version below has been removed.
+   ========================================================================== */
